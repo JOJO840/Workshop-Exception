@@ -17,6 +17,8 @@ public class NameService {
     private List<String> lastNames;
     private static Random random = new Random();
 
+
+
     //should be no nulls
     public NameService(List<String> maleFirstNames, List<String> femaleFirstNames, List<String> lastNames) {
 
@@ -66,11 +68,13 @@ public class NameService {
      */
     public void addFemaleFirstName(String name) throws DuplicateNameException, IOException {
         if (femaleFirstNames.contains(name))
-            throw new DuplicateNameException("", name);
+            throw new DuplicateNameException("Duplicate name ", name);
 
         femaleFirstNames.add(name);
         CSVReader_Writer.saveFemaleNames(femaleFirstNames);
+
     }
+
 
     /**
      * Here you need to check if List<String> maleFirstNames already contains the name
@@ -80,7 +84,7 @@ public class NameService {
      * @param name
      */
     public void addMaleFirstName(String name) throws DuplicateNameException, IOException {
-        if (maleFirstNames.contains(name)) throw new DuplicateNameException("Duplicate Male first name found," + name);
+        if (maleFirstNames.contains(name)) throw new DuplicateNameException("Duplicate Male first name found,", name);
 
         maleFirstNames.add(name);
         CSVReader_Writer.saveMaleNames(maleFirstNames);
@@ -93,7 +97,10 @@ public class NameService {
      *
      * @param lastName
      */
-    public void addLastName(String lastName) throws IOException {
+    public void addLastName(String lastName) throws IOException, DuplicateNameException {
+        if (lastNames.contains(lastName))
+            throw new DuplicateNameException("Duplicate Last name: ", lastName);
+
         lastNames.add(lastName);
         CSVReader_Writer.saveLastNames(lastNames);
     }
